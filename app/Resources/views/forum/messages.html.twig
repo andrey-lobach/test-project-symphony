@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+{% block title %}
+    {{ 'Forum' }}
+{% endblock %}
+{% block body %}
+    <div class="wrap">
+        <div class="messages">
+            {% for message in messages %}
+                <div class="message">
+                    {{ message.author }}:{{ message.message }}
+                    <a href="{{ 'forum/'~message.id~'/delete' }}">Delete message</a>
+                </div>
+            {% endfor %}
+        </div>
+        <div>
+            {{ form_start(form) }}
+            {{ form_widget(form) }}
+            {{ form_end(form) }}
+        </div>
+    </div>
+{% endblock %}
