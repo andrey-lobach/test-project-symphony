@@ -2,20 +2,32 @@
 {% block title %}
     {{ 'Forum' }}
 {% endblock %}
+{% block stylesheets %}
+    <style>
+        /*body{*/
+            /*display: flex;*/
+            /*justify-content: center;*/
+            /*align-items: center;*/
+        /*}*/
+        /*.wrap {*/
+            /*max-width: 1200px;*/
+            /*display: flex;*/
+            /*flex-direction: column;*/
+            /*justify-content: center;*/
+            /*align-items: center;*/
+        /*}*/
+    </style>
+{% endblock %}
 {% block body %}
     <div class="wrap">
         <div class="messages">
             {% for message in messages %}
                 <div class="message">
                     {{ message.author }}:{{ message.message }}
-                    <a href="{{ 'forum/'~message.id~'/delete' }}">Delete message</a>
+                    <a href="{{ 'message/'~message.id~'/delete' }}">Delete message</a> {#TODO#}
                 </div>
             {% endfor %}
         </div>
-        <div>
-            {{ form_start(form) }}
-            {{ form_widget(form) }}
-            {{ form_end(form) }}
-        </div>
+        {{  form(form) }}
     </div>
 {% endblock %}

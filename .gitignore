@@ -1,4 +1,8 @@
-var/
-vendor/
-composer.lock
 .idea
+var/*
+!/var/SymfonyRequirements.php
+!/var/sessions/.gitkeep
+!/var/cache/.gitkeep
+!/var/logs/.gitkeep
+vendor/
+

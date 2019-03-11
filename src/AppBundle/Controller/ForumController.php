@@ -8,63 +8,68 @@
 
 namespace AppBundle\Controller;
 
-use AppBundle\Entity\Message;
+
+use AppBundle\Form\Type\MessageType;
+use AppBundle\Repository\MessageRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class ForumController extends Controller
 {
-    /**
-     * @Route("/forum", name="forum")
-     * @param Request $request
-     *
-     * @return Response
-     */
-    public function showNotes(Request $request)
-    {
-        $repository = $this->getDoctrine()
-            ->getRepository(Message::class);
-        $messages = $repository->findAll();
-        $message = new Message();
-        $form = $this->createFormBuilder($message)
-            ->add('author', TextType::class)
-            ->add('message', TextType::class)
-            ->add('send', SubmitType::class, ['label' => 'Send'])
-            ->getForm();
-        if ($request->getMethod() === Request::METHOD_POST) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $form->handleRequest($request);
-            if ($form->isSubmitted() && $form->isValid()) {
-                $message = $form->getData();
-                $entityManager->persist($message);
-                $entityManager->flush();
-                return $this->redirectToRoute('forum');
-            }
-        }
 
-        return $this->render('forum/messages.html.twig', ['messages' => $messages, 'form'=>$form->createView()]);
+    private $messageRepository;
+
+    /**
+     * ForumController constructor.
+     * @param MessageRepository $messageRepository
+     */
+    public function __construct(MessageRepository $messageRepository)
+    {
+        $this->messageRepository = $messageRepository;
     }
 
     /**
-     * @Route("/forum/{id}/delete",requirements={"id"="\d+"})
+     * @Route("/messages", name="messages")
+     * @return Response
+     */
+    public function listAction()
+    {
+
+//        $messages = $this->messageRepository->getMessages();
+        $messages=[];
+        $form = $this->createForm(MessageType::class);
+        return $this->render('forum/messages.html.twig', ['messages' => $messages, 'form' => $form->createView()]);
+    }
+
+    /**
+     * @Route("/messages/add", methods={"POST"})
+     * @param Request $request
+     * @return void
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
+    public function addAction(Request $request)
+    {
+        $form = $this->createForm(MessageType::class);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $message = $form->getData();
+            $this->messageRepository->addMessage($message);
+        }
+        $this->redirectToRoute('messages');
+    }
+
+    /**
+     * @Route("/message/{id}/delete",requirements={"id"="\d+"})
      * @param         $id
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function delete($id)
     {
-        $entityManager = $this->getDoctrine()->getManager();
-        $repository = $this->getDoctrine()
-            ->getRepository(Message::class);
-        $message = $repository->findOneBy(['id'=>$id]);
-        $entityManager->remove($message);
-        $entityManager->flush();
-
-        return $this->redirectToRoute('forum');
+        $this->messageRepository->deleteAction($id);
+        return $this->redirectToRoute('messages');
 
     }
 }

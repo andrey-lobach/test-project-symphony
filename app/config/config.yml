@@ -31,10 +31,12 @@ framework:
     php_errors:
         log: true
 
+
 # Twig Configuration
 twig:
     debug: '%kernel.debug%'
     strict_variables: '%kernel.debug%'
+
 
 # Doctrine Configuration
 doctrine:
@@ -69,3 +71,4 @@ swiftmailer:
 sensio_framework_extra:
    router:
         annotations: false
+
