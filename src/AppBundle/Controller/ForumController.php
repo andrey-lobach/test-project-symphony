@@ -37,14 +37,14 @@ class ForumController extends Controller
     public function listAction()
     {
         $messages = $this->messageRepository->getMessages();
-            $form = $this->createForm(MessageType::class);
+        $form = $this->createForm(MessageType::class);
         return $this->render('forum/messages.html.twig', ['messages' => $messages, 'form' => $form->createView()]);
     }
 
     /**
      * @Route("/messages/add", methods={"POST"})
      * @param Request $request
-     * @return void
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      * @throws \Doctrine\ORM\OptimisticLockException
      */
     public function add(Request $request)
@@ -52,14 +52,13 @@ class ForumController extends Controller
         $form = $this->createForm(MessageType::class);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $message = $form->getData();
-            $this->messageRepository->addMessage($message);
+            $this->messageRepository->addMessage($form->getData());
         }
-        $this->redirectToRoute('messages');
+        return $this->redirectToRoute('messages');
     }
 
     /**
-     * @Route("/message/{id}/delete",requirements={"id"="\d+"})
+     * @Route("/messages/{id}/delete",requirements={"id"="\d+"})
      * @param         $id
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse

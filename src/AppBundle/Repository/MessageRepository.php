@@ -10,9 +10,7 @@ namespace AppBundle\Repository;
 
 
 use AppBundle\Entity\Message;
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
-use Doctrine\ORM\Mapping;
 
 class MessageRepository extends EntityRepository
 {
@@ -21,10 +19,10 @@ class MessageRepository extends EntityRepository
      * @param int $id
      * @throws \Doctrine\ORM\OptimisticLockException
      */
-    public function delete(int $id)
+    public function delete($id)
     {
         $message = $this->_em->getRepository(Message::class)->findOneBy(['id' => $id]);
-        $this->_em->clear($message);
+        $this->_em->remove($message);
         $this->_em->flush();
     }
 
