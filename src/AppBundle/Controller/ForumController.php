@@ -36,7 +36,7 @@ class ForumController extends Controller
      */
     public function listAction()
     {
-        $messages = $this->messageRepository->getMessages();
+        $messages = $this->messageRepository->findAll();
         $form = $this->createForm(MessageType::class);
         return $this->render('forum/messages.html.twig', ['messages' => $messages, 'form' => $form->createView()]);
     }

@@ -15,11 +15,6 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class MessageList
 {
-    public function __construct()
-    {
-        $this->messages = new ArrayCollection();
-    }
-
     /**
      * @ORM\Column(type="integer")
      * @ORM\Id
@@ -34,6 +29,11 @@ class MessageList
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Message", mappedBy="messageList")
      */
     private $messages;
+
+    public function __construct()
+    {
+        $this->messages = new ArrayCollection();
+    }
 
     /**
      * @return mixed

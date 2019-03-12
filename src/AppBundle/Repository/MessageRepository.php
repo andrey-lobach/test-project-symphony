@@ -12,6 +12,10 @@ namespace AppBundle\Repository;
 use AppBundle\Entity\Message;
 use Doctrine\ORM\EntityRepository;
 
+/**
+ * Class MessageRepository
+ * @method Message[] findAll();
+ */
 class MessageRepository extends EntityRepository
 {
 
@@ -21,17 +25,9 @@ class MessageRepository extends EntityRepository
      */
     public function delete($id)
     {
-        $message = $this->_em->getRepository(Message::class)->findOneBy(['id' => $id]);
+        $message = $this->findOneBy(['id' => $id]);
         $this->_em->remove($message);
         $this->_em->flush();
-    }
-
-    /**
-     * @return Message[]|array
-     */
-    public function getMessages()
-    {
-        return $this->_em->getRepository(Message::class)->findAll();
     }
 
     /**
