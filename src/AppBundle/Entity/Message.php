@@ -7,10 +7,8 @@
  */
 
 namespace AppBundle\Entity;
-
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
-
 /**
  * @ORM\Entity(repositoryClass="AppBundle\Repository\MessageRepository")
  * @ORM\Table(name="message")
@@ -23,13 +21,11 @@ class Message
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
-
     /**
      * @Assert\NotBlank()
      * @ORM\Column(type="string")
      */
     private $author;
-
     /**
      * @Assert\NotBlank()
      * @ORM\Column(type="text")
@@ -37,13 +33,18 @@ class Message
     private $message;
 
     /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\MessageList", inversedBy="messages")
+     */
+    private $messageList;
+
+    /**
      * @return mixed
      */
+
     public function getId()
     {
         return $this->id;
     }
-
     /**
      * @param mixed $id
      */
@@ -51,7 +52,6 @@ class Message
     {
         $this->id = $id;
     }
-
     /**
      * @return mixed
      */
@@ -59,7 +59,6 @@ class Message
     {
         return $this->message;
     }
-
     /**
      * @param mixed $message
      */
@@ -67,7 +66,6 @@ class Message
     {
         $this->message = $message;
     }
-
     /**
      * @return mixed
      */
@@ -75,7 +73,6 @@ class Message
     {
         return $this->author;
     }
-
     /**
      * @param mixed $author
      */
@@ -84,4 +81,19 @@ class Message
         $this->author = $author;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getMessageList()
+    {
+        return $this->messageList;
+    }
+
+    /**
+     * @param mixed $messageList
+     */
+    public function setMessageList($messageList)
+    {
+        $this->messageList = $messageList;
+    }
 }

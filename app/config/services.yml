@@ -38,3 +38,13 @@ services:
         factory: ['@doctrine.orm.default_entity_manager', getRepository]
         arguments:
             - AppBundle\Entity\Message
+    admin.category:
+        class: AppBundle\Admin\MessageListAdmin
+        arguments: [~, AppBundle\Entity\MessageList, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: 'Message List' }
+    admin.blog_post:
+        class: AppBundle\Admin\MessageAdmin
+        arguments: [~, AppBundle\Entity\Message, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: 'Message' }
