@@ -43,6 +43,8 @@ services:
         arguments: [~, AppBundle\Entity\MessageList, ~]
         tags:
             - { name: sonata.admin, manager_type: orm, label: 'Message List' }
+        calls:
+            - [addChild, ['@admin.blog_post', 'messageList']]
     admin.blog_post:
         class: AppBundle\Admin\MessageAdmin
         arguments: [~, AppBundle\Entity\Message, ~]

@@ -14,9 +14,12 @@ use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
+use Sonata\AdminBundle\Route\RouteCollection;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Knp\Menu\ItemInterface as MenuItemInterface;
+use Sonata\AdminBundle\Admin\AdminInterface;
 
 class MessageAdmin extends AbstractAdmin
 {
@@ -24,11 +27,7 @@ class MessageAdmin extends AbstractAdmin
     {
         $formMapper
             ->add('author', TextType::class)
-            ->add('message', TextareaType::class)
-            ->add('messageList', EntityType::class, [
-                'class' => MessageList::class,
-                'choice_label' => 'title',
-            ]);
+            ->add('message', TextareaType::class);
     }
 
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
@@ -37,6 +36,7 @@ class MessageAdmin extends AbstractAdmin
             ->add('author')
             ->add('message');
     }
+
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
@@ -51,4 +51,11 @@ class MessageAdmin extends AbstractAdmin
             : 'Message'; // shown in the breadcrumb on the create view
     }
 
+    protected function configureRoutes(RouteCollection $collection)
+    {
+        if ($this->isChild()) {
+            return;
+        }
+        $collection->clear();
+    }
 }
