@@ -38,7 +38,8 @@ class ForumController extends Controller
     {
         $messages = $this->messageRepository->findAll();
         $form = $this->createForm(MessageType::class);
-        return $this->render('forum/messages.html.twig', ['messages' => $messages, 'form' => $form->createView()]);
+        $activeUser = $this->messageRepository->getActiveUser();
+        return $this->render('forum/messages.html.twig', ['messages' => $messages, 'form' => $form->createView(), 'activeUser' => $activeUser]);
     }
 
     /**

@@ -40,4 +40,19 @@ class MessageRepository extends EntityRepository
         $this->_em->flush();
     }
 
+
+    /**
+     * @return mixed
+     */
+    public function getActiveUser()
+    {
+        $query = $this->createQueryBuilder('m')
+            ->select('m.author', 'count(m.message) as countMessage')
+            ->groupBy('m.author')
+            ->orderBy('countMessage', 'DESC')
+            ->setMaxResults(1)
+            ->getQuery();
+        $activeUser = $query->getArrayResult();
+        return count($activeUser) ? $activeUser[0]['author'] : null;
+    }
 }

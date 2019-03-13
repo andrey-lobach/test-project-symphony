@@ -4,6 +4,7 @@
 {% endblock %}
 {% block body %}
     <div class="wrap">
+        <h3>The most active user: {{ activeUser }}</h3>
         <div class="messages">
             {% for message in messages %}
                 <div class="message">
