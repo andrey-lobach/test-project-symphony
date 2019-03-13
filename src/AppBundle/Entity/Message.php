@@ -7,8 +7,10 @@
  */
 
 namespace AppBundle\Entity;
+
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+
 /**
  * @ORM\Entity(repositoryClass="AppBundle\Repository\MessageRepository")
  * @ORM\Table(name="message")
@@ -45,6 +47,7 @@ class Message
     {
         return $this->id;
     }
+
     /**
      * @param mixed $id
      */
@@ -52,6 +55,7 @@ class Message
     {
         $this->id = $id;
     }
+
     /**
      * @return mixed
      */
@@ -59,6 +63,7 @@ class Message
     {
         return $this->message;
     }
+
     /**
      * @param mixed $message
      */
@@ -66,6 +71,7 @@ class Message
     {
         $this->message = $message;
     }
+
     /**
      * @return mixed
      */
@@ -73,6 +79,7 @@ class Message
     {
         return $this->author;
     }
+
     /**
      * @param mixed $author
      */
