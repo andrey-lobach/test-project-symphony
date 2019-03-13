@@ -44,7 +44,7 @@ class MessageRepository extends EntityRepository
     /**
      * @return mixed
      */
-    public function getActiveUser()
+    public function getMostActiveUserName(): string
     {
         $query = $this->createQueryBuilder('m')
             ->select('m.author', 'count(m.message) as countMessage')

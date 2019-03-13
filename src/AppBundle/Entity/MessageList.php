@@ -23,10 +23,12 @@ class MessageList
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
+
     /**
      * @ORM\Column(type="string")
      */
     private $title;
+
     /**
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Message", mappedBy="messageList")
      */

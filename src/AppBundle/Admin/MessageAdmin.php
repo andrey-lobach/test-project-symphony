@@ -17,8 +17,14 @@ use Sonata\AdminBundle\Route\RouteCollection;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 
+/**
+ * Class MessageAdmin
+ */
 class MessageAdmin extends AbstractAdmin
 {
+    /**
+     * @param FormMapper $formMapper
+     */
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
@@ -26,6 +32,9 @@ class MessageAdmin extends AbstractAdmin
             ->add('message', TextareaType::class);
     }
 
+    /**
+     * @param DatagridMapper $datagridMapper
+     */
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
         $datagridMapper
@@ -33,6 +42,9 @@ class MessageAdmin extends AbstractAdmin
             ->add('message');
     }
 
+    /**
+     * @param ListMapper $listMapper
+     */
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
@@ -40,18 +52,23 @@ class MessageAdmin extends AbstractAdmin
             ->addIdentifier('message');
     }
 
+    /**
+     * @param $object
+     *
+     * @return mixed|string
+     */
     public function toString($object)
     {
-        return $object instanceof Message
-            ? $object->getId()
-            : 'Message';
+        return $object instanceof Message ? $object->getId() : 'Message';
     }
 
+    /**
+     * @param RouteCollection $collection
+     */
     protected function configureRoutes(RouteCollection $collection)
     {
-        if ($this->isChild()) {
-            return;
+        if (!$this->isChild()) {
+            $collection->clear();
         }
-        $collection->clear();
     }
 }
