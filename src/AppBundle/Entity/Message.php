@@ -37,6 +37,11 @@ class Message
     private $message;
 
     /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\MessageList", inversedBy="messages")
+     */
+    private $messageList;
+
+    /**
      * @return mixed
      */
     public function getId()
@@ -84,4 +89,19 @@ class Message
         $this->author = $author;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getMessageList()
+    {
+        return $this->messageList;
+    }
+
+    /**
+     * @param mixed $messageList
+     */
+    public function setMessageList($messageList)
+    {
+        $this->messageList = $messageList;
+    }
 }
