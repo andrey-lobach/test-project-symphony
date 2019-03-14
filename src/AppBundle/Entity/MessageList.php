@@ -34,6 +34,9 @@ class MessageList
      */
     private $messages;
 
+    /**
+     * MessageList constructor.
+     */
     public function __construct()
     {
         $this->messages = new ArrayCollection();

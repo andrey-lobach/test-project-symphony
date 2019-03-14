@@ -18,14 +18,13 @@ use Doctrine\ORM\EntityRepository;
  */
 class MessageRepository extends EntityRepository
 {
-
     /**
-     * @param int $id
+     * @param Message $message
+     *
      * @throws \Doctrine\ORM\OptimisticLockException
      */
-    public function delete($id)
+    public function delete(Message $message)
     {
-        $message = $this->findOneBy(['id' => $id]);
         $this->_em->remove($message);
         $this->_em->flush();
     }

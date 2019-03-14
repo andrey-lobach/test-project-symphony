@@ -23,11 +23,13 @@ class Message
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
+
     /**
      * @Assert\NotBlank()
      * @ORM\Column(type="string")
      */
     private $author;
+
     /**
      * @Assert\NotBlank()
      * @ORM\Column(type="text")
@@ -42,7 +44,6 @@ class Message
     /**
      * @return mixed
      */
-
     public function getId()
     {
         return $this->id;

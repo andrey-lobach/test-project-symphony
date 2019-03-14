@@ -53,16 +53,6 @@ class MessageAdmin extends AbstractAdmin
     }
 
     /**
-     * @param $object
-     *
-     * @return mixed|string
-     */
-    public function toString($object)
-    {
-        return $object instanceof Message ? $object->getId() : 'Message';
-    }
-
-    /**
      * @param RouteCollection $collection
      */
     protected function configureRoutes(RouteCollection $collection)
@@ -70,5 +60,15 @@ class MessageAdmin extends AbstractAdmin
         if (!$this->isChild()) {
             $collection->clear();
         }
+    }
+
+    /**
+     * @param $object
+     *
+     * @return mixed|string
+     */
+    public function toString($object)
+    {
+        return $object instanceof Message ? $object->getId() : 'Message';
     }
 }

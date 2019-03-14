@@ -8,13 +8,18 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Message;
 use AppBundle\Form\Type\MessageType;
 use AppBundle\Repository\MessageRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
+/**
+ * Class ForumController
+ */
 class ForumController extends Controller
 {
     /**.
@@ -71,15 +76,16 @@ class ForumController extends Controller
     /**
      * @Route("/messages/{id}/delete",requirements={"id"="\d+"})
      *
-     * @param int $id
+     * @param Message $message
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      *
      * @throws \Doctrine\ORM\OptimisticLockException
+     * @ParamConverter("message", class="AppBundle\Entity\Message" )
      */
-    public function delete(int $id)
+    public function delete(Message $message)
     {
-        $this->messageRepository->delete($id);
+        $this->messageRepository->delete($message);
 
         return $this->redirectToRoute('messages');
     }

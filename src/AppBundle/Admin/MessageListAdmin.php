@@ -56,9 +56,9 @@ class MessageListAdmin extends AbstractAdmin
     /**
      * @param $object
      *
-     * @return mixed|string
+     * @return string
      */
-    public function toString($object)
+    public function toString($object): string
     {
         return $object instanceof MessageList ? $object->getTitle() : 'Message';
     }
