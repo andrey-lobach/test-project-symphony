@@ -11,11 +11,11 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Message;
 use AppBundle\Form\Type\MessageType;
 use AppBundle\Repository\MessageRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 /**
  * Class ForumController
@@ -39,6 +39,7 @@ class ForumController extends Controller
 
     /**
      * @Route("/messages", name="messages")
+     *
      * @return Response
      */
     public function listAction()
@@ -74,14 +75,13 @@ class ForumController extends Controller
     }
 
     /**
-     * @Route("/messages/{id}/delete",requirements={"id"="\d+"})
+     * @Route("/messages/{id}/delete")
      *
      * @param Message $message
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      *
      * @throws \Doctrine\ORM\OptimisticLockException
-     * @ParamConverter("message", class="AppBundle\Entity\Message" )
      */
     public function delete(Message $message)
     {
